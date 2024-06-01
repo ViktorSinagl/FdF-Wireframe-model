@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transformations_utils.c                            :+:      :+:    :+:   */
+/*   linedraw_bresemhans.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -69,7 +69,6 @@ void	drawline_under45(t_imgdata *data, t_point start, t_point end, int color)
 	}
 }
 
-
 void	drawline_above45(t_imgdata *data, t_point start, t_point end, int color)
 {
 	t_diff	diff;
@@ -124,5 +123,5 @@ void	putline_bresemhans(t_imgdata *data, t_point a, t_point b, int color)
 			else
 				drawline_above45(data, b, a, color);
 		}
-	} 
+	}
 }

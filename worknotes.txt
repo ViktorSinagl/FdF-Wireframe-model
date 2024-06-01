@@ -1,0 +1,13 @@
+- [x] srcs/main.c
+- [x] draw.c
+- [x] map_utils.c
+- [x] image.c
+- [x] linedraw_dda.c
+- [x] my_free.c
+- [x] linedraw_bresemhans.c
+- [x] map.c
+- [x] transformations.c
+- [x] utils.c
+- [x] key_controls.c
+- [x] transformations_utils.c
+

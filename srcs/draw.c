@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
 void	draw_mesh(t_metadata *meta)
 {
 	int	x;

@@ -1,31 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_controls.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/13 09:10:10 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/01 14:18:15 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
 int	close_program(t_metadata *vars)
 {
 	my_free(vars);
-	return(0);
+	return (0);
 }
 
 void	zoom(int keycode, t_metadata *meta)
 {
-	int zoom;
+	int	zoom;
 
 	if (meta->map->sidelen < 10)
 		zoom = 1;
 	else if (meta->map->sidelen < 30)
 		zoom = 3;
-	else 
+	else
 		zoom = 5;
 	if (keycode == 'x' && meta->map->sidelen < 100)
 		meta->map->sidelen += zoom;
 	else if (keycode == 'z' && meta->map->sidelen > 2)
 		meta->map->sidelen -= zoom;
-	if (meta->projection == 1)	
-		izometric3D_2(meta->map, meta->p_matrix, meta->map->x_offset, meta->map->y_offset); 
+	if (meta->projection == 1)
+		izometric3d_2(meta->map, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 	else if (meta->projection == 2)
-		parallel_projection(meta, meta->p_matrix, meta->map->x_offset, meta->map->y_offset); 
-	else if (meta->projection == 3)	
-		oblique_projection(meta->map, meta->p_matrix, meta->map->x_offset, meta->map->y_offset); 
+		parallel_projection(meta, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
+	else if (meta->projection == 3)
+		oblique_projection(meta->map, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 }
 
 void	change_projection(t_metadata *meta)
@@ -36,19 +51,22 @@ void	change_projection(t_metadata *meta)
 	if (meta->projection == 1)
 	{
 		meta->projection = 2;
-		rotate_map(meta->map, 0, 0, rot_diff+ 22.5);
-		parallel_projection(meta, meta->p_matrix, meta->map->x_offset, meta->map->y_offset);
+		rotate_map(meta->map, 0, 0, rot_diff + 22.5);
+		parallel_projection(meta, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 	}
 	else if (meta->projection == 2)
 	{
 		meta->projection = 3;
 		rotate_map(meta->map, 0, 0, rot_diff);
-		oblique_projection(meta->map, meta->p_matrix, meta->map->x_offset, meta->map->y_offset);
+		oblique_projection(meta->map, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 	}
 	else if (meta->projection == 3)
 	{
 		meta->projection = 1;
-		izometric3D_2(meta->map, meta->p_matrix, meta->map->x_offset, meta->map->y_offset);
+		izometric3d_2(meta->map, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 	}
 }
 
@@ -68,16 +86,19 @@ void	rotate_projection(int keycode, t_metadata *meta)
 	else if (ft_tolower(keycode) == 'f' && meta->camera_angle > 0)
 		meta->camera_angle -= 0.05;
 	if (meta->projection == 1)
-		izometric3D_2(meta->map, meta->p_matrix, meta->map->x_offset, meta->map->y_offset); 
+		izometric3d_2(meta->map, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 	else if (meta->projection == 2)
-		parallel_projection(meta, meta->p_matrix, meta->map->x_offset, meta->map->y_offset); 
+		parallel_projection(meta, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 	else if (meta->projection == 3)
-		oblique_projection(meta->map, meta->p_matrix, meta->map->x_offset, meta->map->y_offset); 
+		oblique_projection(meta->map, meta->p_matrix,
+			meta->map->x_offset, meta->map->y_offset);
 }
 
-int	key_control(int keycode , void *param)
+int	key_control(int keycode, void *param)
 {
-	t_metadata *meta;
+	t_metadata	*meta;
 	int			move;
 
 	meta = param;
@@ -92,12 +113,12 @@ int	key_control(int keycode , void *param)
 		offset_matrix(meta, -move, 0);
 	else if (keycode == RIGHT || ft_tolower(keycode) == 'd')
 		offset_matrix(meta, move, 0);
-	else if (ft_tolower(keycode) == 'q' || ft_tolower(keycode) == 'e' || ft_tolower(keycode) == 'r' || ft_tolower(keycode) == 'f')
-		rotate_projection(keycode,meta);
+	else if (ft_tolower(keycode) == 'q' || ft_tolower(keycode) == 'e'
+		|| ft_tolower(keycode) == 'r' || ft_tolower(keycode) == 'f')
+		rotate_projection(keycode, meta);
 	else if (ft_tolower(keycode) == 'c')
 		change_projection(meta);
-	else 
+	else
 		zoom(keycode, meta);
-	return(0);
+	return (0);
 }
-
